@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title if title is defined else "IncluiTech — Pesquisa" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <div class="bg"></div>
+
+  <main class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo" aria-label="IncluiTech"></div>
+        <div class="brand-text">
+          <div class="brand-name">IncluiTech</div>
+          <div class="brand-tag">Pesquisa de validação • Guarapuava</div>
+        </div>
+      </div>
+
+      {% set p = progress if progress is defined else 0 %}
+
+      <div class="progress-wrap" aria-label="Progresso">
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: {{ p }}%"></div>
+        </div>
+        <div class="progress-text">{{ p }}%</div>
+      </div>
+
+      {% if subtitle is defined and subtitle %}
+        <p class="subtitle">{{ subtitle }}</p>
+      {% endif %}
+    </header>
+
+    <section class="card">
+      {% block content %}{% endblock %}
+    </section>
+
+    <footer class="footer">
+      <span>© IncluiTech</span>
+      <span class="dot">•</span>
+      <span>Respostas confidenciais</span>
+    </footer>
+  </main>
+</body>
+</html>

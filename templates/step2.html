@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% set title = "IncluiTech — Etapa 2" %}
+{% set subtitle = "Etapa 2/3 • Gestão, rotina e sinais do dia a dia" %}
+
+{% block content %}
+<form method="post" class="form">
+
+  <label>4) A retenção de talentos é um desafio atualmente?</label>
+  <select name="retencao_desafio" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Não","Moderadamente","Sim, é um problema relevante"] %}
+      <option value="{{ opt }}" {% if data.get("retencao_desafio")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>5) Já perdeu bons colaboradores por dificuldade de adaptação ao ambiente ou à equipe?</label>
+  <select name="perdeu_por_adaptacao" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Não","Talvez","Sim"] %}
+      <option value="{{ opt }}" {% if data.get("perdeu_por_adaptacao")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>6) Você consegue estimar o custo médio de substituição de um colaborador?</label>
+  <select name="custo_substituicao" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Sim","Não"] %}
+      <option value="{{ opt }}" {% if data.get("custo_substituicao")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>7) Conflitos entre liderança e equipe ocorrem com que frequência?</label>
+  <select name="conflitos_frequencia" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Raramente","Às vezes","Com frequência"] %}
+      <option value="{{ opt }}" {% if data.get("conflitos_frequencia")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>8) A comunicação interna gera retrabalho ou ruído operacional?</label>
+  <select name="comunicacao_retrabalho" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Não","Eventualmente","Sim"] %}
+      <option value="{{ opt }}" {% if data.get("comunicacao_retrabalho")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>9) Líderes/gestores/coordenadores recebem treinamento estruturado para lidar com diferentes perfis comportamentais?</label>
+  <select name="treinamento_perfis" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Sim","Não","Apenas pontualmente"] %}
+      <option value="{{ opt }}" {% if data.get("treinamento_perfis")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>10) A empresa possui protocolo claro para integração e adaptação de novos colaboradores?</label>
+  <select name="protocolo_integracao" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Sim","Não","Parcialmente"] %}
+      <option value="{{ opt }}" {% if data.get("protocolo_integracao")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>11) Já ocorreram afastamentos relacionados a questões emocionais ou comportamentais?</label>
+  <select name="afastamentos" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Não","Sim, isoladamente","Sim, de forma recorrente"] %}
+      <option value="{{ opt }}" {% if data.get("afastamentos")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>12) Você considera que sua liderança está totalmente preparada para lidar com diferentes perfis de comportamento e comunicação?</label>
+  <select name="lideranca_preparada" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Sim","Parcialmente","Não"] %}
+      <option value="{{ opt }}" {% if data.get("lideranca_preparada")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <div class="actions">
+    <button type="submit" name="_action" value="back" class="btn-ghost">Voltar</button>
+    <button type="submit">Avançar</button>
+  </div>
+</form>
+{% endblock %}

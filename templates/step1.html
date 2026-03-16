@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% set title = "IncluiTech — Etapa 1" %}
+{% set subtitle = "Etapa 1/3 • Perfil da empresa" %}
+
+{% block content %}
+<form method="post" class="form">
+
+  <label>Nome da empresa </label>
+  <input name="nome_empresa" placeholder="Ex: Empresa X" value="{{ data.get('nome_empresa','') }}">
+
+  <label>1) Quantos colaboradores sua empresa possui?</label>
+  <select name="empresa_tamanho" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Até 20","21–50","51–100","101–300","Mais de 300"] %}
+      <option value="{{ opt }}" {% if data.get("empresa_tamanho")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>2) Qual o principal segmento da empresa?</label>
+  <input name="segmento" placeholder="Ex: comércio, indústria, saúde..." value="{{ data.get('segmento','') }}" required>
+
+  <label>3) Existe setor de RH (recursos humanos) estruturado?</label>
+  <select name="rh_estruturado" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Sim","Não","Parcialmente"] %}
+      <option value="{{ opt }}" {% if data.get("rh_estruturado")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <div class="actions">
+    <span></span>
+    <button type="submit">Avançar</button>
+  </div>
+</form>
+{% endblock %}

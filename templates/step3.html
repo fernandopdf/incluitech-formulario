@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% set title = "IncluiTech — Etapa 3" %}
+{% set subtitle = "Etapa 3/3 • Interesse, investimento e sinais de neurodiversidade" %}
+
+{% block content %}
+<form method="post" class="form">
+
+  <label>13) Sua empresa investe anualmente em desenvolvimento de liderança ou clima organizacional?</label>
+  <select name="investimento_lideranca" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Não investe","Até R$ 10 mil","R$ 10 mil – R$ 50 mil","Acima de R$ 50 mil"] %}
+      <option value="{{ opt }}" {% if data.get("investimento_lideranca")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>14) Se existisse um diagnóstico estruturado que identificasse riscos ocultos de gestão e oportunidades de melhoria de performance, você teria interesse em conhecer?</label>
+  <select name="interesse_diagnostico" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Não","Talvez","Sim"] %}
+      <option value="{{ opt }}" {% if data.get("interesse_diagnostico")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>15) Considerando um diagnóstico organizacional com relatório executivo e plano técnico de melhoria, sua empresa consideraria investir:</label>
+  <select name="faixa_investimento" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Não investiria","Até R$ 3.000","Entre R$ 3.000 e R$ 8.000","Entre R$ 8.000 e R$ 20.000","Avaliaria conforme escopo"] %}
+      <option value="{{ opt }}" {% if data.get("faixa_investimento")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>16) Existe algum padrão recorrente na sua empresa que gera desgaste, retrabalho ou perda de produtividade, mas que ainda não foi estruturado como problema formal? (opcional)</label>
+  <textarea name="padrao_oculto" rows="4" placeholder="Ex: falhas na integração, ruído entre setores, rotatividade...">{{ data.get("padrao_oculto","") }}</textarea>
+
+  <hr style="border:0;border-top:1px solid rgba(255,255,255,0.12); margin: 10px 0;">
+
+  <label>17) (Opcional) Sua empresa já teve ou tem colaboradores com diagnóstico de autismo ou TDAH (transtorno do déficit de atenção e hiperatividade), ou com suspeita/traços percebidos?</label>
+  <select name="neuro_diag">
+    <option value="">Selecione</option>
+    {% for opt in ["Sim","Talvez / não tenho certeza","Não","Prefiro não responder"] %}
+      <option value="{{ opt }}" {% if data.get("neuro_diag")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>18) (Opcional) Sua empresa já precisou fazer adaptações simples para colaboradores com necessidades específicas de atenção, rotina, comunicação ou ambiente (incluindo casos como TDAH (transtorno do déficit de atenção e hiperatividade) e autismo)?</label>
+  <select name="adaptacoes_simples">
+    <option value="">Selecione</option>
+    {% for opt in ["Sim","Não","Não sei","Prefiro não responder"] %}
+      <option value="{{ opt }}" {% if data.get("adaptacoes_simples")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <label>19) Se a empresa recebesse um treinamento prático para liderança sobre neurodiversidade (ex.: autismo e TDAH (transtorno do déficit de atenção e hiperatividade)), isso seria útil?</label>
+  <select name="treinamento_neurodiv" required>
+    <option value="">Selecione</option>
+    {% for opt in ["Sim","Talvez","Não"] %}
+      <option value="{{ opt }}" {% if data.get("treinamento_neurodiv")==opt %}selected{% endif %}>{{ opt }}</option>
+    {% endfor %}
+  </select>
+
+  <div class="actions">
+    <button type="submit" name="_action" value="back" class="btn-ghost">Voltar</button>
+    <button type="submit">Enviar</button>
+  </div>
+</form>
+{% endblock %}
