@@ -1,0 +1,24 @@
+MIRAGEM RECORDS · FONTES
+
+Todas gratuitas, inclusive para uso comercial (licença SIL Open Font License 1.1).
+Na logo, no perfil, no banner e na marca d'água o texto foi convertido em contorno
+vetorial, então essas peças não dependem de fonte instalada.
+
+1. DM Serif Display (normal e itálico)
+   Uso: nome "Miragem" na logo, frase do banner, subtítulo da capa.
+   https://fonts.google.com/specimen/DM+Serif+Display
+
+2. Rubik Mono One
+   Uso: "RECORDS", "A NEW CRATE EVERY WEEK", selo "1 HOUR MIX", número da caixa.
+   https://fonts.google.com/specimen/Rubik+Mono+One
+
+3. Shrikhand
+   Uso: título da noite na capa (ex.: "CARAVANA DE FUEGO").
+   https://fonts.google.com/specimen/Shrikhand
+
+Para editar capa-modelo.svg no Figma, Inkscape ou Illustrator, instale as três fontes acima.
+O capa-modelo.html já traz as fontes embutidas e funciona direto no navegador.
+
+PALETA
+Papel envelhecido #EADBB8 · Preto quente #1C1611 · Vermelho #B8321F
+Mostarda #D99A2B · Azul noite #1F3A4D

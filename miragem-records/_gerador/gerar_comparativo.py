@@ -1,4 +1,4 @@
-"""Monta logo/propostas/comparativo.html (as 3 variações lado a lado)."""
+"""Monta _propostas-etapa1/comparativo.html (as 3 variações lado a lado)."""
 import os
 from gerar_logos import OUT, VARIACOES, PAPEL, PRETO
 

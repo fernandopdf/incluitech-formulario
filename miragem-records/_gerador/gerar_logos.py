@@ -1,14 +1,14 @@
 """Gera as 3 propostas de logo da Miragem Records (Etapa 1).
 
-Saída: miragem-records/logo/propostas/<variacao>/<layout>-<fundo>.svg
-       miragem-records/logo/propostas/comparativo.html
+Saída: miragem-records/_propostas-etapa1/<variacao>/<layout>-<fundo>.svg
+       miragem-records/_propostas-etapa1/comparativo.html
 Uso:   python3 gerar_logos.py
 """
 import math
 import os
 import lettering as L
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "logo", "propostas")
+OUT = os.path.join(os.path.dirname(__file__), "..", "_propostas-etapa1")
 
 PAPEL = "#EADBB8"
 PRETO = "#1C1611"

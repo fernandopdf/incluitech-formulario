@@ -16,6 +16,7 @@ FONTS = {
     "fraunces700": "fraunces-latin-700-normal.woff",
     "fraunces600": "fraunces-latin-600-normal.woff",
     "dmserif": "dm-serif-display-latin-400-normal.woff",
+    "dmserifit": "dm-serif-display-latin-400-italic.woff",
 }
 _cache = {}
 
