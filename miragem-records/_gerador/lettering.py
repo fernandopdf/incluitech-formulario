@@ -17,6 +17,7 @@ FONTS = {
     "fraunces600": "fraunces-latin-600-normal.woff",
     "dmserif": "dm-serif-display-latin-400-normal.woff",
     "dmserifit": "dm-serif-display-latin-400-italic.woff",
+    "bagel": "bagel-fat-one-latin-400-normal.woff",
 }
 _cache = {}
 
