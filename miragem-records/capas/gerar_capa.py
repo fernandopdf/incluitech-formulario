@@ -16,7 +16,7 @@ import re
 import sys
 
 import numpy as np
-from PIL import Image, ImageChops, ImageDraw, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(AQUI, "..", "_gerador"))
@@ -141,6 +141,10 @@ ESTILOS = {
     "C": dict(fonte="bagel", tracking=0.02, l1=dict(onda=0.07, inflar=0.12), l2=dict(onda=-0.06),
               x=36, y=24, larg1=730, larg2=500, alin2="centro", gap=4, cor2=MOSTARDA,
               brilho=True, bloco=6, selo="pilula-base", contorno=VERMELHO),
+    # E: céu claro, mais vivo: título dourado com contorno escuro grosso, cores saturadas
+    "E": dict(fonte="shrikhand", tracking=0.0, l1=dict(arco=0.18, inflar=0.10), l2=dict(arco=0.10),
+              x=40, y=24, larg1=730, larg2=480, alin2="centro", gap=0, cor1=(240, 176, 48), cor2=(240, 176, 48),
+              brilho=False, bloco=8, selo="redondo", contorno=SOMBRA, logo="claro", vivo=True),
     # D: igual à A, para fotos de céu claro (letras vermelhas com contorno creme, logo escura)
     "D": dict(fonte="shrikhand", tracking=0.0, l1=dict(arco=0.22, inflar=0.10), l2=dict(arco=0.12),
               x=40, y=22, larg1=730, larg2=480, alin2="centro", gap=0, cor1=VERMELHO, cor2=(31, 58, 77),
@@ -167,9 +171,13 @@ def selo(base, tipo, cap, x, y, altura=17):
     return pw, ph
 
 
-def capa(imagem, titulo, titulo2, capitulo, estilo, foco):
+def capa(imagem, titulo, titulo2, capitulo, estilo, foco, subtitulo=""):
     e = ESTILOS[estilo]
-    foto = tratar(recortar(Image.open(imagem).convert("RGB"), foco)).convert("RGBA")
+    foto = recortar(Image.open(imagem).convert("RGB"), foco)
+    if e.get("vivo"):  # mais cor e contraste, luz mais dourada
+        foto = ImageEnhance.Color(foto).enhance(1.5)
+        foto = ImageEnhance.Contrast(foto).enhance(1.22)
+    foto = tratar(foto).convert("RGBA")
 
     l1, w1, h1 = caber(texto(e["fonte"], titulo, e["tracking"], **e["l1"]), e["x"], e["y"], largura=e["larg1"])
     linhas = [(l1, e.get("cor1", CREME))]
@@ -181,6 +189,11 @@ def capa(imagem, titulo, titulo2, capitulo, estilo, foco):
         l2 = L.transform(l2, lambda a, b: (a + x2, b + fundo_y + e["gap"]))
         linhas.append((l2, e["cor2"]))
         fundo_y += e["gap"] + h2
+    if subtitulo:  # linha pequena em etiqueta escura, sempre legível
+        t, sw, sh = caber(L.contours("rubikmono", subtitulo, 40, tracking=0.16)[0], 0, 0, altura=16)
+        px, py = e["x"] + 6, fundo_y + 18
+        ImageDraw.Draw(foto).rounded_rectangle((px, py, px + sw + 32, py + sh + 20), radius=(sh + 20) / 2, fill=SOMBRA + (235,))
+        colar(foto, reduzir(mascara(L.transform(t, lambda a, b: (a + px + 16, b + py + 10)))), CREME)
 
     mascaras = [(reduzir(mascara(cs)), cor) for cs, cor in linhas]
     if e.get("brilho"):
@@ -227,10 +240,11 @@ def main():
     p.add_argument("--capitulo", default="1")
     p.add_argument("--estilo", default="A", choices=sorted(ESTILOS))
     p.add_argument("--foco", default="205,183,1050", help="X,Y,LARGURA do recorte 16:9")
+    p.add_argument("--subtitulo", default="", help="linha pequena abaixo do título")
     p.add_argument("--saida")
     a = p.parse_args()
     foco = [float(v) for v in a.foco.split(",")]
-    img = capa(a.imagem, a.titulo.upper(), a.titulo2.upper(), a.capitulo, a.estilo, foco)
+    img = capa(a.imagem, a.titulo.upper(), a.titulo2.upper(), a.capitulo, a.estilo, foco, a.subtitulo.upper())
     slug = re.sub(r"[^a-z0-9]+", "-", f"{a.titulo} {a.titulo2}".lower()).strip("-")
     saida = a.saida or os.path.join(AQUI, "saida", f"capa-{slug}-{a.estilo}.png")
     os.makedirs(os.path.dirname(os.path.abspath(saida)), exist_ok=True)
