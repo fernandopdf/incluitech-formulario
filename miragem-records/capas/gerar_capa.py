@@ -141,6 +141,10 @@ ESTILOS = {
     "C": dict(fonte="bagel", tracking=0.02, l1=dict(onda=0.07, inflar=0.12), l2=dict(onda=-0.06),
               x=36, y=24, larg1=730, larg2=500, alin2="centro", gap=4, cor2=MOSTARDA,
               brilho=True, bloco=6, selo="pilula-base", contorno=VERMELHO),
+    # D: igual à A, para fotos de céu claro (letras vermelhas com contorno creme, logo escura)
+    "D": dict(fonte="shrikhand", tracking=0.0, l1=dict(arco=0.22, inflar=0.10), l2=dict(arco=0.12),
+              x=40, y=22, larg1=730, larg2=480, alin2="centro", gap=0, cor1=VERMELHO, cor2=(31, 58, 77),
+              brilho=False, bloco=7, selo="redondo", contorno=CREME, logo="claro"),
 }
 
 
@@ -168,7 +172,7 @@ def capa(imagem, titulo, titulo2, capitulo, estilo, foco):
     foto = tratar(recortar(Image.open(imagem).convert("RGB"), foco)).convert("RGBA")
 
     l1, w1, h1 = caber(texto(e["fonte"], titulo, e["tracking"], **e["l1"]), e["x"], e["y"], largura=e["larg1"])
-    linhas = [(l1, CREME)]
+    linhas = [(l1, e.get("cor1", CREME))]
     fundo_y = e["y"] + h1
     if titulo2:
         l2 = texto(e["fonte"], titulo2, e["tracking"], **e["l2"])
@@ -194,14 +198,15 @@ def capa(imagem, titulo, titulo2, capitulo, estilo, foco):
         colar(foto, m, cor)
 
     if e["selo"] == "redondo":
-        selo(foto, "redondo", capitulo, e["x"] + w1 - 70, fundo_y + 6)
+        selo(foto, "redondo", capitulo, e["x"] + max(w1 - 70, (w1 + (w2 if titulo2 else 0)) / 2 + 64), fundo_y + 6)
     elif e["selo"] == "pilula-topo":
         selo(foto, "pilula", capitulo, e["x"] + 4, e["y"] - 44)
     else:  # embaixo da segunda linha, alinhado ao fim dela
         selo(foto, "pilula", capitulo, e["x"] + (w1 + w2) / 2 - 196, fundo_y + 8, altura=14)
 
-    if os.path.exists(LOGO):  # logo pequena no canto superior direito
-        lg = Image.open(LOGO).convert("RGBA")
+    logo = LOGO.replace("fundo-escuro", "fundo-claro") if e.get("logo") == "claro" else LOGO
+    if os.path.exists(logo):  # logo pequena no canto superior direito
+        lg = Image.open(logo).convert("RGBA")
         lg = lg.resize((round(lg.width * 40 / lg.height), 40), Image.LANCZOS)
         foto.alpha_composite(lg, (W - lg.width - 30, 26))
     return foto.convert("RGB")
