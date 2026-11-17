@@ -198,7 +198,7 @@ def capa(imagem, titulo, titulo2, capitulo, estilo, foco):
         colar(foto, m, cor)
 
     if e["selo"] == "redondo":
-        selo(foto, "redondo", capitulo, e["x"] + max(w1 - 70, (w1 + (w2 if titulo2 else 0)) / 2 + 64), fundo_y + 6)
+        selo(foto, "redondo", capitulo, e["x"] + max(w1 - 70, (w1 + (w2 if titulo2 else 0)) / 2 + 64), fundo_y + (6 if titulo2 else 66))
     elif e["selo"] == "pilula-topo":
         selo(foto, "pilula", capitulo, e["x"] + 4, e["y"] - 44)
     else:  # embaixo da segunda linha, alinhado ao fim dela
